@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>SL Auto Car - 3D AI Luxury Workshop & Autonomous Office</title>
+  <title>SL Auto Car - 3D AI Luxury 3-Floor Workshop & Autonomous Office</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Three.js (cdnjs) -->
@@ -11,51 +11,62 @@
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #070913; color: #f1f5f9; touch-action: none; }
+    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #060913; color: #f1f5f9; touch-action: none; }
     #canvas-container { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
-    .glass-panel { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(16px); border: 1px solid rgba(51, 65, 85, 0.65); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65); }
-    .glass-card { background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(8px); border: 1px solid rgba(71, 85, 105, 0.5); }
-    .glass-input { background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(71, 85, 105, 0.7); }
-    .glass-input:focus { border-color: #38bdf8; outline: none; box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25); }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    .glass-panel { background: rgba(13, 20, 36, 0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(56, 189, 248, 0.2); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7); }
+    .glass-card { background: rgba(22, 33, 56, 0.75); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(71, 85, 105, 0.45); }
+    .glass-input { background: rgba(10, 16, 30, 0.95); border: 1px solid rgba(71, 85, 105, 0.6); }
+    .glass-input:focus { border-color: #38bdf8; outline: none; box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3); }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
-    ::-webkit-scrollbar-thumb { background: rgba(71, 85, 105, 0.8); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: rgba(71, 85, 105, 0.8); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
     .badge-pulse { animation: badgePulse 2s infinite ease-in-out; }
-    @keyframes badgePulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.85; } }
+    @keyframes badgePulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.12); opacity: 0.85; } }
   </style>
 </head>
 <body class="select-none">
 
-  <!-- 3D WebGL Canvas Layer -->
+  <!-- 3D Canvas Layer -->
   <div id="canvas-container"></div>
 
-  <!-- Mobile Dimmer Backdrop for Drawers -->
+  <!-- Mobile Backdrop for sliding drawers -->
   <div id="drawer-backdrop" onclick="closeAllDrawers()" class="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm hidden transition-opacity duration-300"></div>
 
-  <!-- Top Navigation Bar -->
-  <header class="absolute top-2.5 left-2.5 right-2.5 z-20 flex items-center justify-between pointer-events-none gap-2">
+  <!-- Top Glass Bar: Brand, Multi-Floor Switcher & Status -->
+  <header class="absolute top-2.5 left-2.5 right-2.5 z-20 flex flex-wrap items-center justify-between pointer-events-none gap-2">
     <!-- Brand Badge -->
-    <div class="pointer-events-auto flex items-center gap-2.5 px-3 py-2 rounded-2xl glass-panel shadow-xl">
-      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-cyan-500 flex items-center justify-center text-white shadow-md">
-        <i class="fa-solid fa-crown text-xs"></i>
+    <div class="pointer-events-auto flex items-center gap-3 px-3.5 py-2 rounded-2xl glass-panel shadow-2xl">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+        <i class="fa-solid fa-crown text-sm"></i>
       </div>
       <div>
-        <div class="flex items-center gap-1.5">
-          <h1 class="text-xs sm:text-sm font-bold tracking-wide text-white">SL AUTO CAR · 3D AI 工坊</h1>
-          <span class="px-1.5 py-0.2 text-[9px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded-full flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> 11 部门在线
+        <div class="flex items-center gap-2">
+          <h1 class="text-xs sm:text-sm font-bold tracking-wide text-white">SL AUTO CAR · 3D 智慧工坊 v8.0</h1>
+          <span class="px-2 py-0.5 text-[9px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded-full flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> 3层建筑 · 自主意识生态
           </span>
         </div>
+        <p class="text-[10px] text-slate-400 hidden sm:block">1F机修与仓储 · 2F高管与研发智控 · 3F天台天宫与娱乐沙龙</p>
       </div>
     </div>
 
-    <!-- Quick Buttons -->
-    <div class="pointer-events-auto flex items-center gap-1.5 p-1 rounded-2xl glass-panel text-xs overflow-x-auto">
+    <!-- Quick Floor & View Jumpers -->
+    <div class="pointer-events-auto flex items-center gap-1.5 p-1 rounded-2xl glass-panel text-xs overflow-x-auto max-w-[70vw] sm:max-w-none shadow-2xl">
       <button onclick="zoomToTarget('overview')" class="px-2.5 py-1.5 rounded-xl hover:bg-slate-800 transition flex items-center gap-1 text-slate-300 hover:text-white shrink-0">
-        <i class="fa-solid fa-cube text-cyan-400"></i> 全厂鸟瞰
+        <i class="fa-solid fa-cube text-cyan-400"></i> 全厂全景
       </button>
-      <button onclick="openDepartmentDirectory()" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 transition flex items-center gap-1 text-cyan-300 shrink-0 border border-cyan-500/30">
-        <i class="fa-solid fa-building-user text-cyan-400"></i> 部门直达
+      <button onclick="zoomToTarget('floor1')" class="px-2.5 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 transition flex items-center gap-1 text-amber-300 border border-amber-500/30 shrink-0">
+        <i class="fa-solid fa-wrench text-amber-400"></i> 1F机修仓储
+      </button>
+      <button onclick="zoomToTarget('floor2')" class="px-2.5 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 transition flex items-center gap-1 text-cyan-300 border border-cyan-500/30 shrink-0">
+        <i class="fa-solid fa-briefcase text-cyan-400"></i> 2F决策中枢
+      </button>
+      <button onclick="zoomToTarget('floor3')" class="px-2.5 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 transition flex items-center gap-1 text-rose-300 border border-rose-500/30 shrink-0">
+        <i class="fa-solid fa-champagne-glasses text-rose-400"></i> 3F空中沙龙
+      </button>
+      <button onclick="openDepartmentDirectory()" class="px-2.5 py-1.5 rounded-xl bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 hover:bg-indigo-600/50 transition flex items-center gap-1 shrink-0">
+        <i class="fa-solid fa-building-user text-indigo-400"></i> 11部门直达
       </button>
       <button onclick="openProposalsModal()" class="px-2.5 py-1.5 rounded-xl bg-purple-600/30 text-purple-300 border border-purple-500/50 hover:bg-purple-600/50 transition flex items-center gap-1 relative shrink-0">
         <i class="fa-solid fa-lightbulb text-yellow-300"></i> 提案中心
@@ -70,32 +81,33 @@
     </div>
   </header>
 
-  <!-- Left Sidebar Drawer (Offscreen by default on mobile) -->
-  <aside id="sidebar-drawer" class="fixed lg:absolute left-0 lg:left-4 top-0 lg:top-20 bottom-0 lg:bottom-6 w-80 z-40 lg:z-20 flex flex-col glass-panel lg:rounded-2xl overflow-hidden transition-transform duration-300 -translate-x-full lg:translate-x-0 shadow-2xl">
-    <div class="p-3.5 border-b border-slate-700/60 bg-slate-900/80 flex items-center justify-between">
+  <!-- Left Sidebar Drawer: Organization, Assistant & AI Consciousness Monitor -->
+  <aside id="sidebar-drawer" class="fixed lg:absolute left-0 lg:left-3 top-0 lg:top-16 bottom-0 lg:bottom-4 w-80 z-40 lg:z-20 flex flex-col glass-panel lg:rounded-2xl overflow-hidden transition-transform duration-300 -translate-x-full lg:translate-x-0 shadow-2xl">
+    <div class="p-3 border-b border-slate-700/60 bg-slate-900/80 flex items-center justify-between">
       <div class="flex items-center gap-2">
         <i class="fa-solid fa-network-wired text-cyan-400"></i>
-        <span class="text-sm font-semibold tracking-wide text-white">车间部门与通讯中枢</span>
+        <span class="text-xs sm:text-sm font-semibold tracking-wide text-white">智慧车间组织中枢</span>
       </div>
       <button onclick="toggleSidebarDrawer(false)" class="lg:hidden w-7 h-7 rounded-lg bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
 
-    <div class="flex-1 overflow-y-auto p-2 space-y-3 text-xs">
+    <!-- Scrollable Agent & Consciousness List -->
+    <div class="flex-1 overflow-y-auto p-2.5 space-y-3 text-xs">
       <div>
         <div class="text-[10px] font-bold text-amber-400/90 px-2 py-0.5 uppercase tracking-wider flex items-center justify-between">
-          <span>最高指挥 · 私人幕僚</span>
-          <i class="fa-solid fa-shield-halved text-[10px]"></i>
+          <span>最高全权指挥 · 私人总助理</span>
+          <i class="fa-solid fa-crown text-[10px]"></i>
         </div>
         <button onclick="switchChannel('assistant'); zoomToTarget('assistant'); toggleSidebarDrawer(false);" id="chan-btn-assistant" class="w-full text-left p-2.5 rounded-xl flex items-center justify-between bg-gradient-to-r from-amber-600/20 via-rose-600/20 to-purple-600/20 text-white border border-amber-500/50 hover:border-amber-400 transition shadow-sm mt-1">
-          <div class="flex items-center gap-2 truncate">
-            <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-white text-xs">
+          <div class="flex items-center gap-2.5 truncate">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-white text-xs shadow-md">
               <i class="fa-solid fa-crown"></i>
             </div>
             <div class="truncate">
               <div class="text-xs font-bold text-amber-200">Elena (私人总助理)</div>
-              <div class="text-[10px] text-slate-300 truncate">Room 05 · 权限高于经理</div>
+              <div class="text-[10px] text-slate-300 truncate">2F 悬挑指挥台 · 权限高于经理</div>
             </div>
           </div>
           <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
@@ -115,24 +127,32 @@
             </div>
             <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
           </button>
+          <button onclick="switchChannel('audit'); toggleSidebarDrawer(false);" id="chan-btn-audit" class="w-full text-left px-3 py-2 rounded-xl flex items-center justify-between text-slate-300 hover:bg-slate-800/80 transition">
+            <div class="flex items-center gap-2 truncate">
+              <i class="fa-solid fa-brain text-xs text-purple-400"></i>
+              <span class="text-xs font-medium"># AI自主意识与行为流</span>
+            </div>
+            <span class="text-[9px] text-slate-500 font-mono">Live</span>
+          </button>
         </div>
       </div>
 
+      <!-- Autonomous Agent Live Consciousness Status -->
       <div>
         <div class="text-[10px] font-bold text-slate-400 px-2 py-0.5 uppercase tracking-wider flex items-center justify-between">
-          <span>部门专线 (7大工位)</span>
-          <i class="fa-solid fa-user-gear text-[10px]"></i>
+          <span>员工自主心智监控 (8位智能体)</span>
+          <i class="fa-solid fa-heart-pulse text-[10px] text-rose-400"></i>
         </div>
-        <div class="space-y-1 mt-1" id="dm-list-container"></div>
+        <div class="space-y-1.5 mt-1" id="agent-consciousness-roster"></div>
       </div>
     </div>
   </aside>
 
-  <!-- Right Chat Drawer (Offscreen by default on mobile) -->
-  <main id="chat-drawer" class="fixed lg:absolute right-0 lg:right-4 top-0 lg:top-20 bottom-0 lg:bottom-6 w-full sm:w-[420px] z-40 lg:z-20 flex flex-col glass-panel lg:rounded-2xl overflow-hidden shadow-2xl transition-transform duration-300 translate-x-full lg:translate-x-0">
-    <div class="p-3.5 border-b border-slate-700/60 bg-slate-900/80 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div id="active-chat-avatar" class="w-8 h-8 rounded-xl bg-cyan-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
+  <!-- Right Drawer: Chat & Direct Communications -->
+  <main id="chat-drawer" class="fixed lg:absolute right-0 lg:right-3 top-0 lg:top-16 bottom-0 lg:bottom-4 w-full sm:w-[410px] z-40 lg:z-20 flex flex-col glass-panel lg:rounded-2xl overflow-hidden shadow-2xl transition-transform duration-300 translate-x-full lg:translate-x-0">
+    <div class="p-3 border-b border-slate-700/60 bg-slate-900/80 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div id="active-chat-avatar" class="w-8 h-8 rounded-xl bg-amber-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
           <i class="fa-solid fa-crown"></i>
         </div>
         <div>
@@ -140,11 +160,11 @@
             <h2 id="active-chat-title" class="text-xs sm:text-sm font-bold text-white tracking-wide">Elena (私人总助理)</h2>
             <span id="active-chat-role-badge" class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">最高幕僚长</span>
           </div>
-          <p id="active-chat-desc" class="text-[10px] text-slate-400 truncate max-w-[210px]">全权统筹调度 · 过滤琐碎汇报</p>
+          <p id="active-chat-desc" class="text-[10px] text-slate-400 truncate max-w-[210px]">全权统筹排期 · 智能过滤汇报</p>
         </div>
       </div>
       <div class="flex items-center gap-1.5">
-        <button onclick="requestActiveAgentReport()" title="汇报进度" class="p-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition text-xs flex items-center gap-1 border border-slate-700">
+        <button onclick="requestActiveAgentReport()" title="索取汇报" class="p-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition text-xs flex items-center gap-1 border border-slate-700">
           <i class="fa-solid fa-chart-line text-cyan-400"></i>
         </button>
         <button onclick="toggleChatDrawer(false)" class="lg:hidden w-7 h-7 rounded-lg bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">
@@ -166,7 +186,7 @@
     </div>
   </main>
 
-  <!-- Mobile Bottom Floating Navigation Bar -->
+  <!-- Mobile Bottom Floating Navigation Bar (Samsung S25 Ultra / Tab S12+ Optimized) -->
   <nav class="lg:hidden fixed bottom-3 left-3 right-3 z-30 glass-panel rounded-2xl p-1.5 flex items-center justify-around text-xs shadow-2xl">
     <button onclick="zoomToTarget('assistant'); switchChannel('assistant'); toggleChatDrawer(true);" class="flex flex-col items-center gap-0.5 text-amber-300 py-1 px-2 hover:bg-slate-800 rounded-xl">
       <i class="fa-solid fa-crown text-sm"></i>
@@ -177,8 +197,8 @@
       <span class="text-[9px]">对讲</span>
     </button>
     <button onclick="toggleSidebarDrawer(true)" class="flex flex-col items-center gap-0.5 text-slate-300 py-1 px-2 hover:bg-slate-800 rounded-xl">
-      <i class="fa-solid fa-network-wired text-sm"></i>
-      <span class="text-[9px]">部门</span>
+      <i class="fa-solid fa-brain text-sm text-purple-400"></i>
+      <span class="text-[9px]">心智</span>
     </button>
     <button onclick="openProposalsModal()" class="flex flex-col items-center gap-0.5 text-purple-300 py-1 px-2 hover:bg-slate-800 rounded-xl relative">
       <i class="fa-solid fa-lightbulb text-sm"></i>
@@ -195,31 +215,35 @@
     </button>
   </nav>
 
-  <!-- MODAL: 11 DEPARTMENTS DIRECTORY -->
-  <div id="departments-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
-    <div class="glass-panel w-full max-w-2xl rounded-2xl overflow-hidden border border-cyan-500/40 shadow-2xl flex flex-col max-h-[85vh]">
+  <!-- MODAL: 11 DEPARTMENTS DIRECTORY (3-FLOOR DIRECTORY) -->
+  <div id="departments-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm hidden">
+    <div class="glass-panel w-full max-w-3xl rounded-2xl overflow-hidden border border-cyan-500/40 shadow-2xl flex flex-col max-h-[85vh]">
       <div class="p-4 border-b border-slate-700/80 flex items-center justify-between bg-slate-900/90">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-building-user text-cyan-400"></i>
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-cyan-600/30 text-cyan-400 border border-cyan-500/50 flex items-center justify-center">
+            <i class="fa-solid fa-building-user text-sm"></i>
+          </div>
           <div>
-            <h3 class="text-sm font-bold text-white">车间部门与独立办公室导览目录 (Room 01 - 11)</h3>
-            <p class="text-[11px] text-slate-400">点击任意部门，镜头自动平滑飞抵并挂载发光门牌</p>
+            <h3 class="text-sm font-bold text-white">车间 3 层 11 大专属部门导览 (Room 01 - 11)</h3>
+            <p class="text-[11px] text-slate-400">点击任意部门，镜头平滑穿梭飞抵并高亮门牌</p>
           </div>
         </div>
         <button onclick="closeDepartmentDirectory()" class="w-7 h-7 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <div class="p-4 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs" id="dept-directory-list"></div>
+      <div class="p-4 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-xs" id="dept-directory-list"></div>
     </div>
   </div>
 
   <!-- MODAL: PROPOSALS CENTER -->
-  <div id="proposals-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
+  <div id="proposals-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm hidden">
     <div class="glass-panel w-full max-w-3xl rounded-2xl overflow-hidden border border-purple-500/40 shadow-2xl flex flex-col max-h-[85vh]">
       <div class="p-4 border-b border-slate-700/80 flex items-center justify-between bg-slate-900/90">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-lightbulb text-yellow-300"></i>
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-purple-600/30 text-yellow-300 border border-purple-500/50 flex items-center justify-center text-sm">
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
           <div>
             <h3 class="text-sm font-bold text-white">员工自主提案与业务优化中心</h3>
             <p class="text-[11px] text-slate-400">员工空闲时自主分析业务瓶颈提出的方案 · 老板批准后立即落地归档</p>
@@ -232,19 +256,21 @@
       <div id="proposals-list" class="p-4 overflow-y-auto space-y-3 text-xs"></div>
       <div class="p-3 border-t border-slate-700/80 bg-slate-900/60 flex items-center justify-between text-xs">
         <button onclick="triggerSimulateAutonomousIdea()" class="px-3 py-1.5 rounded-xl bg-purple-600/30 text-purple-300 border border-purple-500/40 hover:bg-purple-600/50 flex items-center gap-1.5 transition">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> 触发员工自主头脑风暴
+          <i class="fa-solid fa-wand-magic-sparkles"></i> 触发员工自主思考点子
         </button>
-        <button onclick="closeProposalsModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300">关闭视窗</button>
+        <button onclick="closeProposalsModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300">关闭</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL: DELIVERABLES VAULT -->
-  <div id="records-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
+  <div id="records-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm hidden">
     <div class="glass-panel w-full max-w-4xl rounded-2xl overflow-hidden border border-blue-500/40 shadow-2xl flex flex-col max-h-[85vh]">
       <div class="p-4 border-b border-slate-700/80 flex items-center justify-between bg-slate-900/90">
-        <div class="flex items-center gap-2">
-          <i class="fa-solid fa-box-archive text-blue-300"></i>
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-blue-600/30 text-blue-300 border border-blue-500/50 flex items-center justify-center text-sm">
+            <i class="fa-solid fa-box-archive"></i>
+          </div>
           <div>
             <h3 class="text-sm font-bold text-white">车间成果资产与分类归档库 (Vault)</h3>
             <p class="text-[11px] text-slate-400">所有专员交付的标准模板、毛利算式与SOP海报全记录</p>
@@ -259,7 +285,7 @@
         <button onclick="filterRecords('finance')" id="rec-tab-finance" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 shrink-0">财务毛利</button>
         <button onclick="filterRecords('marketing')" id="rec-tab-marketing" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 shrink-0">营销海报</button>
         <button onclick="filterRecords('sop')" id="rec-tab-sop" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 shrink-0">标准SOP</button>
-        <button onclick="filterRecords('parts')" id="rec-tab-parts" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 shrink-0">零件对标库</button>
+        <button onclick="filterRecords('parts')" id="rec-tab-parts" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 shrink-0">零件库</button>
         <button onclick="filterRecords('sa')" id="rec-tab-sa" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 shrink-0">SA发客模板</button>
       </div>
       <div id="records-grid" class="p-4 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-3 text-xs"></div>
@@ -271,18 +297,18 @@
 
   <script>
     /* =====================================================================
-       1. BUILT-IN FAILSAFE TOUCH & MOUSE ORBIT CONTROLLER
+       1. FAILSAFE ORBIT CONTROLLER (Touch / Mouse / Pinch Zoom)
        ===================================================================== */
     if (typeof THREE !== 'undefined' && typeof THREE.OrbitControls === 'undefined') {
       THREE.OrbitControls = function(camera, domElement) {
         this.camera = camera;
         this.domElement = domElement || document.body;
-        this.target = new THREE.Vector3(0, 3.5, 0);
-        this.minDistance = 3;
-        this.maxDistance = 65;
-        this.maxPolarAngle = Math.PI / 2 - 0.04;
+        this.target = new THREE.Vector3(0, 5, 0);
+        this.minDistance = 4;
+        this.maxDistance = 85;
+        this.maxPolarAngle = Math.PI / 2 - 0.02;
         
-        let isDragging = false, prevX = 0, prevY = 0;
+        let isDragging = false, prevX = 0, prevY = 0, startDist = 0;
         let spherical = new THREE.Spherical();
         let offset = new THREE.Vector3();
         const scope = this;
@@ -295,12 +321,28 @@
 
         function onDown(e) {
           if (e.target !== scope.domElement) return;
+          if (e.touches && e.touches.length === 2) {
+            startDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+            return;
+          }
           isDragging = true;
           prevX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
           prevY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
         }
 
         function onMove(e) {
+          if (e.touches && e.touches.length === 2) {
+            const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+            const factor = startDist / dist;
+            startDist = dist;
+            updateSpherical();
+            spherical.radius *= (factor - 1) * 0.4 + 1;
+            spherical.radius = Math.max(scope.minDistance, Math.min(scope.maxDistance, spherical.radius));
+            offset.setFromSpherical(spherical);
+            scope.camera.position.copy(scope.target).add(offset);
+            scope.camera.lookAt(scope.target);
+            return;
+          }
           if (!isDragging) return;
           const cx = e.clientX || (e.touches && e.touches[0].clientX) || 0;
           const cy = e.clientY || (e.touches && e.touches[0].clientY) || 0;
@@ -310,7 +352,7 @@
           updateSpherical();
           spherical.theta -= dx * 0.005;
           spherical.phi -= dy * 0.005;
-          spherical.phi = Math.max(0.1, Math.min(scope.maxPolarAngle, spherical.phi));
+          spherical.phi = Math.max(0.08, Math.min(scope.maxPolarAngle, spherical.phi));
           spherical.radius = Math.max(scope.minDistance, Math.min(scope.maxDistance, spherical.radius));
           offset.setFromSpherical(spherical);
           scope.camera.position.copy(scope.target).add(offset);
@@ -339,43 +381,48 @@
     }
 
     /* =====================================================================
-       2. DATA ARCHITECTURE: 11 DEPARTMENTS & AGENTS
+       2. THREE-FLOOR ARCHITECTURE & 11 ROOM SPECIFICATIONS
        ===================================================================== */
-    const FLOOR_2_Y = 6.2;
+    const FLOOR_2_Y = 6.2;   // 2F Executive & Labs
+    const FLOOR_3_Y = 11.8;  // 3F Penthouse Sky Lounge & Zen Garden
 
     const DEPARTMENTS = [
-      { id: 'room01', code: 'ROOM 01', name: '前台接待与服务顾问部', enName: 'SA RECEPTION & CLIENT CONSULTATION', floor: '1F 临街接待岛台', agent: 'Kevin (SA服务顾问)', color: '#38bdf8', pos: { x: -11.5, y: 0, z: 7.5 }, signPos: { x: -11.5, y: 3.6, z: 5.1 }, camPos: { x: -11.5, y: 2.2, z: 12.0 }, lookPos: { x: -11.5, y: 1.2, z: 7.5 } },
-      { id: 'room02', code: 'ROOM 02', name: '举升机机修与底盘诊断区', enName: 'HOIST BAY & CHASSIS DIAGNOSTICS', floor: '1F 车间主通道核心位', agent: 'Alex (辉师傅 / 技术总监)', color: '#f59e0b', pos: { x: 3.8, y: 0, z: 5.4 }, signPos: { x: 6.0, y: 5.8, z: 0.2 }, camPos: { x: 6.0, y: 3.6, z: 10.5 }, lookPos: { x: 4.8, y: 1.8, z: 4.0 } },
-      { id: 'room03', code: 'ROOM 03', name: '配件仓储与供应链中心', enName: 'PARTS LOGISTICS & WAREHOUSE', floor: '1F 右侧仓库立柜区', agent: 'Ray (全品牌配件专员)', color: '#a855f7', pos: { x: 12.0, y: 0, z: -5.5 }, signPos: { x: 10.2, y: 4.8, z: -5.5 }, camPos: { x: 8.5, y: 3.2, z: -5.5 }, lookPos: { x: 12.5, y: 1.5, z: -5.5 } },
-      { id: 'room04', code: 'ROOM 04', name: '数字化营销与视觉设计室', enName: 'MARKETING & CREATIVE STUDIO', floor: '1F 左侧独立创意工坊', agent: 'Coco (营销与海报策划)', color: '#ec4899', pos: { x: -11.5, y: 0, z: 1.5 }, signPos: { x: -11.5, y: 3.6, z: -0.6 }, camPos: { x: -11.5, y: 2.4, z: 5.5 }, lookPos: { x: -11.5, y: 1.2, z: 1.5 } },
-      { id: 'room05', code: 'ROOM 05', name: '首席幕僚长全权指挥台', enName: 'CHIEF OF STAFF COMMAND CENTER', floor: '2F 复式正中全景天桥', agent: 'Elena (私人总助理)', color: '#fbbf24', pos: { x: -1.0, y: FLOOR_2_Y, z: -4.2 }, signPos: { x: -1.0, y: FLOOR_2_Y + 2.8, z: -4.2 }, camPos: { x: -1.0, y: FLOOR_2_Y + 2.0, z: -0.8 }, lookPos: { x: -1.0, y: FLOOR_2_Y + 1.2, z: -4.2 } },
-      { id: 'room06', code: 'ROOM 06', name: '车间总经理专属督导室', enName: 'GENERAL MANAGER SUITE', floor: '2F 左侧全景高管室', agent: 'Arthur (车间总管 / 经理)', color: '#6366f1', pos: { x: -5.5, y: FLOOR_2_Y, z: -8.5 }, signPos: { x: -5.5, y: FLOOR_2_Y + 3.2, z: -4.2 }, camPos: { x: -5.5, y: FLOOR_2_Y + 2.2, z: -3.5 }, lookPos: { x: -5.5, y: FLOOR_2_Y + 1.2, z: -8.5 } },
-      { id: 'room07', code: 'ROOM 07', name: '财务核算与成本精算部', enName: 'FINANCIAL AUDIT & MARGIN DEPT', floor: '2F 左中独立办公室', agent: 'Fin (财务与毛利精算师)', color: '#14b8a6', pos: { x: -10.0, y: FLOOR_2_Y, z: -8.5 }, signPos: { x: -10.0, y: FLOOR_2_Y + 3.2, z: -4.2 }, camPos: { x: -10.0, y: FLOOR_2_Y + 2.2, z: -3.5 }, lookPos: { x: -10.0, y: FLOOR_2_Y + 1.2, z: -8.5 } },
-      { id: 'room08', code: 'ROOM 08', name: '工艺标准化与质控部', enName: 'SOP & QUALITY ASSURANCE DEPT', floor: '2F 最左侧技术规程室', agent: 'Master Lin (SOP总监)', color: '#10b981', pos: { x: -14.5, y: FLOOR_2_Y, z: -8.5 }, signPos: { x: -14.5, y: FLOOR_2_Y + 3.2, z: -4.2 }, camPos: { x: -14.5, y: FLOOR_2_Y + 2.2, z: -3.5 }, lookPos: { x: -14.5, y: FLOOR_2_Y + 1.2, z: -8.5 } },
+      { id: 'room01', code: 'ROOM 01', name: '前台接待与服务顾问部', enName: 'SA RECEPTION & CLIENT SUITE', floor: '1F 临街接待岛台', agent: 'Kevin (SA服务顾问)', color: '#38bdf8', pos: { x: -11.5, y: 0, z: 7.5 }, signPos: { x: -11.5, y: 3.6, z: 5.1 }, camPos: { x: -11.5, y: 2.2, z: 12.0 }, lookPos: { x: -11.5, y: 1.2, z: 7.5 } },
+      { id: 'room02', code: 'ROOM 02', name: '双柱举升跑车检修展位', enName: 'MASTER HOIST & CHASSIS DIAGNOSTICS', floor: '1F 车间主通道核心位', agent: 'Alex (辉师傅 / 技术总监)', color: '#f59e0b', pos: { x: 3.8, y: 0, z: 5.4 }, signPos: { x: 6.0, y: 5.8, z: 0.2 }, camPos: { x: 6.0, y: 3.8, z: 11.5 }, lookPos: { x: 4.8, y: 1.8, z: 4.0 } },
+      { id: 'room03', code: 'ROOM 03', name: '配件仓储与智慧供应链中心', enName: 'PARTS LOGISTICS VAULT', floor: '1F 右侧重型仓储区', agent: 'Ray (全品牌配件专员)', color: '#a855f7', pos: { x: 12.0, y: 0, z: -5.5 }, signPos: { x: 10.2, y: 4.8, z: -5.5 }, camPos: { x: 8.5, y: 3.2, z: -5.5 }, lookPos: { x: 12.5, y: 1.5, z: -5.5 } },
+      { id: 'room04', code: 'ROOM 04', name: '数字化营销与视觉设计室', enName: 'MARKETING & CREATIVE STUDIO', floor: '1F 左侧独立工坊', agent: 'Coco (营销与海报策划)', color: '#ec4899', pos: { x: -11.5, y: 0, z: 1.5 }, signPos: { x: -11.5, y: 3.6, z: -0.6 }, camPos: { x: -11.5, y: 2.4, z: 5.5 }, lookPos: { x: -11.5, y: 1.2, z: 1.5 } },
+      { id: 'room05', code: 'ROOM 05', name: '首席幕僚长全权指挥台', enName: 'CHIEF OF STAFF COMMAND BRIDGE', floor: '2F 复式悬挑天桥', agent: 'Elena (私人总助理)', color: '#fbbf24', pos: { x: -1.0, y: FLOOR_2_Y, z: -3.8 }, signPos: { x: -1.0, y: FLOOR_2_Y + 2.8, z: -3.8 }, camPos: { x: -1.0, y: FLOOR_2_Y + 2.0, z: -0.5 }, lookPos: { x: -1.0, y: FLOOR_2_Y + 1.2, z: -3.8 } },
+      { id: 'room06', code: 'ROOM 06', name: '车间总经理专属督导室', enName: 'GENERAL MANAGER SUITE', floor: '2F 左侧高管办公室', agent: 'Arthur (车间总管 / 经理)', color: '#6366f1', pos: { x: -5.5, y: FLOOR_2_Y, z: -8.5 }, signPos: { x: -5.5, y: FLOOR_2_Y + 3.2, z: -4.2 }, camPos: { x: -5.5, y: FLOOR_2_Y + 2.2, z: -3.5 }, lookPos: { x: -5.5, y: FLOOR_2_Y + 1.2, z: -8.5 } },
+      { id: 'room07', code: 'ROOM 07', name: '财务核算与毛利精算部', enName: 'FINANCIAL AUDIT & MARGIN DEPT', floor: '2F 左中独立办公室', agent: 'Fin (财务与毛利精算师)', color: '#14b8a6', pos: { x: -10.0, y: FLOOR_2_Y, z: -8.5 }, signPos: { x: -10.0, y: FLOOR_2_Y + 3.2, z: -4.2 }, camPos: { x: -10.0, y: FLOOR_2_Y + 2.2, z: -3.5 }, lookPos: { x: -10.0, y: FLOOR_2_Y + 1.2, z: -8.5 } },
+      { id: 'room08', code: 'ROOM 08', name: '工艺标准化与质控部', enName: 'SOP & QUALITY ASSURANCE LAB', floor: '2F 最左侧技术规程室', agent: 'Master Lin (SOP总监)', color: '#10b981', pos: { x: -14.5, y: FLOOR_2_Y, z: -8.5 }, signPos: { x: -14.5, y: FLOOR_2_Y + 3.2, z: -4.2 }, camPos: { x: -14.5, y: FLOOR_2_Y + 2.2, z: -3.5 }, lookPos: { x: -14.5, y: FLOOR_2_Y + 1.2, z: -8.5 } },
       { id: 'room09', code: 'ROOM 09', name: 'AI系统架构与研发实验室', enName: 'AI R&D & CYBER LAB', floor: '2F 右侧科技机柜室', agent: 'Neo (AI系统架构师)', color: '#06b6d4', pos: { x: 10.0, y: FLOOR_2_Y, z: -8.5 }, signPos: { x: 10.0, y: FLOOR_2_Y + 3.2, z: -4.2 }, camPos: { x: 10.0, y: FLOOR_2_Y + 2.2, z: -3.5 }, lookPos: { x: 10.0, y: FLOOR_2_Y + 1.2, z: -8.5 } },
-      { id: 'room10', code: 'ROOM 10', name: '数字化智控会议室', enName: 'SMART CONFERENCE ROOM', floor: '2F 右中全景会议大屏区', agent: '85寸智能展示电视', color: '#eab308', pos: { x: 4.0, y: FLOOR_2_Y, z: -8.0 }, signPos: { x: 4.0, y: FLOOR_2_Y + 3.2, z: -3.8 }, camPos: { x: 4.0, y: FLOOR_2_Y + 2.2, z: -2.0 }, lookPos: { x: 4.0, y: FLOOR_2_Y + 1.6, z: -8.0 } },
-      { id: 'room11', code: 'ROOM 11', name: 'VIP娱乐与多功能休息厅', enName: 'RECREATION & BREAK LOUNGE', floor: '2F 最右侧休闲娱乐大厅', agent: '美式台球·街机·PS5·咖啡', color: '#f43f5e', pos: { x: 14.5, y: FLOOR_2_Y, z: -8.0 }, signPos: { x: 14.5, y: FLOOR_2_Y + 3.2, z: -3.8 }, camPos: { x: 14.5, y: FLOOR_2_Y + 2.4, z: -2.0 }, lookPos: { x: 14.5, y: FLOOR_2_Y + 1.5, z: -8.0 } }
+      { id: 'room10', code: 'ROOM 10', name: '数字化智控会议室', enName: 'SMART DIGITAL BOARDROOM', floor: '3F 天宫全景会议大屏区', agent: '85寸智能展示电视', color: '#eab308', pos: { x: 4.0, y: FLOOR_3_Y, z: -7.5 }, signPos: { x: 4.0, y: FLOOR_3_Y + 3.2, z: -3.8 }, camPos: { x: 4.0, y: FLOOR_3_Y + 2.2, z: -2.0 }, lookPos: { x: 4.0, y: FLOOR_3_Y + 1.6, z: -7.5 } },
+      { id: 'room11', code: 'ROOM 11', name: 'VIP空中娱乐沙龙与天台花园', enName: 'SKY PENTHOUSE & ZEN GARDEN', floor: '3F 顶层美式台球·街机·休闲吧', agent: '美式台球·街机·PS5·露台花园', color: '#f43f5e', pos: { x: 14.0, y: FLOOR_3_Y, z: -7.5 }, signPos: { x: 14.0, y: FLOOR_3_Y + 3.2, z: -3.8 }, camPos: { x: 14.0, y: FLOOR_3_Y + 2.6, z: -2.0 }, lookPos: { x: 14.0, y: FLOOR_3_Y + 1.5, z: -7.5 } }
     ];
 
+    /* =====================================================================
+       3. AUTONOMOUS AGENTS (CONSCIOUSNESS & MENTAL STATE MODEL)
+       ===================================================================== */
     const ASSISTANT = {
       id: 'assistant',
       name: 'Elena (私人总助理)',
       role: '最高指挥幕僚长 / 调度排期',
-      zone: 'Room 05 · 首席幕僚长全权指挥台',
+      zone: 'Room 05 · 2F 悬挑指挥台',
       color: '#fbbf24',
-      pos: { x: -1.0, y: FLOOR_2_Y, z: -4.2 },
-      rotationY: Math.PI
+      pos: { x: -1.0, y: FLOOR_2_Y, z: -3.8 },
+      rotationY: Math.PI,
+      mental: { energy: 95, focus: 92, boredom: 8, state: '指挥统筹中', thought: '正在为老板监控今日各工单毛利率...' }
     };
 
     const AGENTS = [
-      { id: 'kevin', name: 'Kevin (SA服务顾问)', role: '接车接待 / 报价精算', zone: 'Room 01 · SA前台接待部', color: '#38bdf8', type: 'seated_desk', pos: { x: -11.5, y: 0, z: 7.5 }, rotationY: Math.PI, meetingPos: { x: 4.0, y: FLOOR_2_Y, z: -8.8 }, meetingRotY: 0 },
-      { id: 'alex', name: 'Alex (辉师傅 / 技术总监)', role: '现场问诊 / 电脑诊断', zone: 'Room 02 · 举升机检修工位', color: '#f59e0b', type: 'standing_tech', pos: { x: 3.8, y: 0, z: 5.4 }, rotationY: -Math.PI / 2 + 0.3, meetingPos: { x: 5.8, y: FLOOR_2_Y, z: -8.8 }, meetingRotY: 0 },
-      { id: 'ray', name: 'Ray (配件专员)', role: '底盘号解码 / 零件对标', zone: 'Room 03 · 配件仓储中心', color: '#a855f7', type: 'seated_counter', pos: { x: 12.0, y: 0, z: -5.5 }, rotationY: Math.PI / 2, meetingPos: { x: 2.2, y: FLOOR_2_Y, z: -8.8 }, meetingRotY: 0 },
-      { id: 'coco', name: 'Coco (营销与海报策划)', role: '社媒引流 / 视觉海报', zone: 'Room 04 · 数字化营销设计室', color: '#ec4899', type: 'seated_desk', pos: { x: -11.5, y: 0, z: 1.5 }, rotationY: Math.PI / 2, meetingPos: { x: 2.2, y: FLOOR_2_Y, z: -6.4 }, meetingRotY: Math.PI },
-      { id: 'arthur', name: 'Arthur (车间总管 / 经理)', role: '全厂调度 / 现场督导', zone: 'Room 06 · 车间总经理室', color: '#6366f1', type: 'seated_desk', pos: { x: -5.5, y: FLOOR_2_Y, z: -8.5 }, rotationY: Math.PI, meetingPos: { x: 0.8, y: FLOOR_2_Y, z: -7.6 }, meetingRotY: -Math.PI / 2 },
-      { id: 'fin', name: 'Fin (财务与毛利精算师)', role: '成本账目 / 单车利润率', zone: 'Room 07 · 财务核算办公室', color: '#14b8a6', type: 'seated_desk', pos: { x: -10.0, y: FLOOR_2_Y, z: -8.5 }, rotationY: Math.PI, meetingPos: { x: 5.8, y: FLOOR_2_Y, z: -6.4 }, meetingRotY: Math.PI },
-      { id: 'lin', name: 'Master Lin (SOP总监)', role: '工艺标准化 / 质检验收', zone: 'Room 08 · SOP质控办公室', color: '#10b981', type: 'seated_desk', pos: { x: -14.5, y: FLOOR_2_Y, z: -8.5 }, rotationY: Math.PI, meetingPos: { x: 4.0, y: FLOOR_2_Y, z: -6.4 }, meetingRotY: Math.PI },
-      { id: 'neo', name: 'Neo (AI系统架构师)', role: 'AI Office 升级与架构研发', zone: 'Room 09 · AI研发实验室', color: '#06b6d4', type: 'seated_desk', pos: { x: 10.0, y: FLOOR_2_Y, z: -8.5 }, rotationY: Math.PI, meetingPos: { x: 0.8, y: FLOOR_2_Y, z: -6.4 }, meetingRotY: Math.PI }
+      { id: 'kevin', name: 'Kevin (SA服务顾问)', role: '接车接待 / 报价精算', zone: 'Room 01 · SA前台接待部', color: '#38bdf8', type: 'seated_desk', pos: { x: -11.5, y: 0, z: 7.5 }, rotationY: Math.PI, meetingPos: { x: 4.0, y: FLOOR_3_Y, z: -8.2 }, meetingRotY: 0, mental: { energy: 88, focus: 85, boredom: 15, state: '录入报价', thought: 'BMW G30 前后刹车片报价算完，工时费稳在 RM 220。' } },
+      { id: 'alex', name: 'Alex (辉师傅 / 技术总监)', role: '现场问诊 / 电脑诊断', zone: 'Room 02 · 举升机检修工位', color: '#f59e0b', type: 'standing_tech', pos: { x: 3.8, y: 0, z: 5.4 }, rotationY: -Math.PI / 2 + 0.3, meetingPos: { x: 5.8, y: FLOOR_3_Y, z: -8.2 }, meetingRotY: 0, mental: { energy: 82, focus: 90, boredom: 10, state: '实车检修', thought: '点火线圈波形平稳，底盘下摆臂胶套未见开裂。' } },
+      { id: 'ray', name: 'Ray (配件专员)', role: '底盘号解码 / 零件对标', zone: 'Room 03 · 配件仓储中心', color: '#a855f7', type: 'seated_counter', pos: { x: 12.0, y: 0, z: -5.5 }, rotationY: Math.PI / 2, meetingPos: { x: 2.2, y: FLOOR_3_Y, z: -8.2 }, meetingRotY: 0, mental: { energy: 78, focus: 80, boredom: 22, state: '调库备料', thought: 'Lemförder 与日本 555 胶套库存还有 14 套。' } },
+      { id: 'coco', name: 'Coco (营销与海报策划)', role: '社媒引流 / 视觉海报', zone: 'Room 04 · 数字化营销设计室', color: '#ec4899', type: 'seated_desk', pos: { x: -11.5, y: 0, z: 1.5 }, rotationY: Math.PI / 2, meetingPos: { x: 2.2, y: FLOOR_3_Y, z: -6.0 }, meetingRotY: Math.PI, mental: { energy: 84, focus: 88, boredom: 12, state: '设计海报', thought: '针对德系抖动免拆除碳的九宫格文案已排版完毕。' } },
+      { id: 'arthur', name: 'Arthur (车间总管 / 经理)', role: '全厂调度 / 现场督导', zone: 'Room 06 · 车间总经理室', color: '#6366f1', type: 'seated_desk', pos: { x: -5.5, y: FLOOR_2_Y, z: -8.5 }, rotationY: Math.PI, meetingPos: { x: 0.8, y: FLOOR_3_Y, z: -7.0 }, meetingRotY: -Math.PI / 2, mental: { energy: 90, focus: 86, boredom: 14, state: '督导巡视', thought: '1F 机修工位周转顺畅，全日预计完成 16 台次。' } },
+      { id: 'fin', name: 'Fin (财务与毛利精算师)', role: '成本账目 / 单车利润率', zone: 'Room 07 · 财务核算办公室', color: '#14b8a6', type: 'seated_desk', pos: { x: -10.0, y: FLOOR_2_Y, z: -8.5 }, rotationY: Math.PI, meetingPos: { x: 5.8, y: FLOOR_3_Y, z: -6.0 }, meetingRotY: Math.PI, mental: { energy: 86, focus: 94, boredom: 8, state: '核算流水', thought: '本周综合配件毛利率 49.2%，已稳达 50% 目标线。' } },
+      { id: 'lin', name: 'Master Lin (SOP总监)', role: '工艺标准化 / 质检验收', zone: 'Room 08 · SOP质控办公室', color: '#10b981', type: 'seated_desk', pos: { x: -14.5, y: FLOOR_2_Y, z: -8.5 }, rotationY: Math.PI, meetingPos: { x: 4.0, y: FLOOR_3_Y, z: -6.0 }, meetingRotY: Math.PI, mental: { energy: 91, focus: 89, boredom: 9, state: '把关标准', thought: '刹车支架螺栓 110Nm 扭力扳手标定合格。' } },
+      { id: 'neo', name: 'Neo (AI系统架构师)', role: 'AI Office 升级与架构研发', zone: 'Room 09 · AI研发实验室', color: '#06b6d4', type: 'seated_desk', pos: { x: 10.0, y: FLOOR_2_Y, z: -8.5 }, rotationY: Math.PI, meetingPos: { x: 0.8, y: FLOOR_3_Y, z: -6.0 }, meetingRotY: Math.PI, mental: { energy: 93, focus: 96, boredom: 5, state: '系统调优', thought: '3 层 WebGL 物理渲染帧率已稳定在 60FPS。' } }
     ];
 
     let PROPOSALS = [
@@ -392,130 +439,327 @@
     let currentChannel = 'assistant';
     let isMeetingMode = false;
     let chatHistories = {
-      assistant: [{ sender: 'assistant', name: 'Elena (私人总助理)', time: '10:00', text: '老板早上好！11个部门与办公室发光门牌已全部点亮。我在 Room 05 全景指挥台就位，随时听候调度吩咐！' }],
-      general: [{ sender: 'assistant', name: 'Elena (私人总助理)', time: '10:01', text: '【通报】车间 11 大独立功能区运转正常，辉师傅在举升机旁站立检修，Ray 在配件库待命。' }]
+      assistant: [{ sender: 'assistant', name: 'Elena (私人总助理)', time: '10:00', text: '老板早上好！全新 3 层插画风 3D 智慧工坊已部署完毕：1F机修与仓储、2F高管与研发中枢、3F空中会议大屏与娱乐沙龙。全体员工自主心智模块已激活！' }],
+      general: [{ sender: 'assistant', name: 'Elena (私人总助理)', time: '10:01', text: '【通报】车间 3 层 11 大功能区全量就绪，各部门按规范推进工单。' }],
+      audit: [{ sender: 'system', name: 'Consciousness Engine', time: '10:00', text: '[Autonomous Agency] 8 Agents simulated with internal energy/boredom states and waypoint pathfinding.' }]
     };
 
     AGENTS.forEach(a => {
-      chatHistories[a.id] = [{ sender: a.id, name: a.name, time: '10:05', text: `老板好！我是${a.name}，正在【${a.zone}】就位，随时吩咐！` }];
+      chatHistories[a.id] = [{ sender: a.id, name: a.name, time: '10:05', text: `老板好！我是${a.name}，正在【${a.zone}】就位，随时听候指示！` }];
     });
 
     /* =====================================================================
-       3. THREE.JS 3D WORLD: 11 DEPARTMENTS, GLOWING SIGNS & PURE RENDERING
+       4. THREE.JS 3D WORLD: 3 FLOORS, ILLUSTRATION ART STYLE & DETAILS
        ===================================================================== */
     let scene, camera, renderer, controls;
     let agentMeshGroups = {};
     let camTargetPos = null, lookTargetPos = null;
+    let clock = new THREE.Clock();
 
     function init3D() {
       const container = document.getElementById('canvas-container');
       if (!container) return;
 
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x0a101d);
+      scene.background = new THREE.Color(0x080e1b);
+      scene.fog = new THREE.FogExp2(0x080e1b, 0.012);
 
-      camera = new THREE.PerspectiveCamera(window.innerWidth < 768 ? 58 : 45, window.innerWidth / window.innerHeight, 0.1, 150);
-      camera.position.set(0, 22, 36);
+      camera = new THREE.PerspectiveCamera(window.innerWidth < 768 ? 58 : 45, window.innerWidth / window.innerHeight, 0.1, 160);
+      camera.position.set(0, 26, 42);
 
       renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       container.appendChild(renderer.domElement);
 
       controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.target.set(0, 3.5, 0);
+      controls.target.set(0, 5, 0);
 
-      scene.add(new THREE.AmbientLight(0xffffff, 0.85));
-      const sun = new THREE.DirectionalLight(0xffffff, 1.1);
-      sun.position.set(15, 30, 20);
+      const ambientLight = new THREE.AmbientLight(0xfff8ee, 0.85);
+      scene.add(ambientLight);
+
+      const sun = new THREE.DirectionalLight(0xfffaed, 1.25);
+      sun.position.set(20, 36, 25);
+      sun.castShadow = true;
+      sun.shadow.mapSize.width = 1024;
+      sun.shadow.mapSize.height = 1024;
+      sun.shadow.bias = -0.0004;
       scene.add(sun);
-      const rim = new THREE.DirectionalLight(0x38bdf8, 0.6);
-      rim.position.set(-20, 15, -20);
-      scene.add(rim);
 
-      buildArchitecture();
-      buildHoistAndCarBay();
-      buildPartsStoreRoom();
+      const cyanRim = new THREE.DirectionalLight(0x38bdf8, 0.65);
+      cyanRim.position.set(-25, 20, -20);
+      scene.add(cyanRim);
+
+      const warmInterior = new THREE.PointLight(0xfef08a, 1.2, 35);
+      warmInterior.position.set(-4, FLOOR_2_Y + 2.5, -5);
+      scene.add(warmInterior);
+
+      buildThreeFloorArchitecture();
+      buildHoistAndExoticCarBay();
+      buildPartsWarehouseLogistics();
+      build3FPenthouseEntertainment();
       buildAllDepartmentSigns();
       buildAllAvatars();
 
       window.addEventListener('resize', onWindowResize);
+      startAutonomousConsciousnessLoop();
       animate();
     }
 
-    function buildArchitecture() {
-      const floor = new THREE.Mesh(new THREE.PlaneGeometry(42, 30), new THREE.MeshStandardMaterial({ color: 0x162032, roughness: 0.2, metalness: 0.3 }));
-      floor.rotation.x = -Math.PI / 2;
-      scene.add(floor);
+    function buildThreeFloorArchitecture() {
+      const floor1 = new THREE.Mesh(
+        new THREE.PlaneGeometry(44, 32),
+        new THREE.MeshStandardMaterial({ color: 0x162032, roughness: 0.25, metalness: 0.3 })
+      );
+      floor1.rotation.x = -Math.PI / 2;
+      floor1.receiveShadow = true;
+      scene.add(floor1);
 
-      const wallMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.8 });
-      const backWall = new THREE.Mesh(new THREE.BoxGeometry(42, 14, 0.4), wallMat);
-      backWall.position.set(0, 7, -14);
-      scene.add(backWall);
-
-      const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.4, 14, 30), wallMat);
-      leftWall.position.set(-21, 7, 0);
-      scene.add(leftWall);
-
-      const mez = new THREE.Mesh(new THREE.BoxGeometry(42, 0.4, 12), new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.4 }));
-      mez.position.set(0, FLOOR_2_Y, -8);
-      scene.add(mez);
-
-      [[-18, -2.2], [-9, -2.2], [0, -2.2], [9, -2.2], [18, -2.2]].forEach(([px, pz]) => {
-        const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, FLOOR_2_Y, 16), new THREE.MeshStandardMaterial({ color: 0x090d16 }));
-        pillar.position.set(px, FLOOR_2_Y / 2, pz);
+      const colMat = new THREE.MeshStandardMaterial({ color: 0x090d16, metalness: 0.85, roughness: 0.3 });
+      [
+        [-19, -2.2], [-9.5, -2.2], [0, -2.2], [9.5, -2.2], [19, -2.2],
+        [-19, -12.5], [19, -12.5]
+      ].forEach(([cx, cz]) => {
+        const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 16.5, 16), colMat);
+        pillar.position.set(cx, 8.25, cz);
+        pillar.castShadow = true;
         scene.add(pillar);
       });
 
-      const glassMat = new THREE.MeshStandardMaterial({ color: 0x93c5fd, transparent: true, opacity: 0.35, roughness: 0.1 });
-      const rail = new THREE.Mesh(new THREE.BoxGeometry(42, 1.2, 0.08), glassMat);
-      rail.position.set(0, FLOOR_2_Y + 0.6, -2.05);
-      scene.add(rail);
+      const wallMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.85 });
+      const backWall = new THREE.Mesh(new THREE.BoxGeometry(44, 16.8, 0.4), wallMat);
+      backWall.position.set(0, 8.4, -14);
+      backWall.receiveShadow = true;
+      scene.add(backWall);
 
-      const saGlass = new THREE.Mesh(new THREE.BoxGeometry(14, 4.2, 0.1), glassMat);
-      saGlass.position.set(-13, 2.1, 5.0);
+      const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.4, 16.8, 32), wallMat);
+      leftWall.position.set(-22, 8.4, 0);
+      leftWall.receiveShadow = true;
+      scene.add(leftWall);
+
+      const mez2F = new THREE.Mesh(
+        new THREE.BoxGeometry(44, 0.4, 12),
+        new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.45 })
+      );
+      mez2F.position.set(0, FLOOR_2_Y, -8);
+      mez2F.receiveShadow = true;
+      scene.add(mez2F);
+
+      const glassMat = new THREE.MeshStandardMaterial({ color: 0x93c5fd, transparent: true, opacity: 0.32, roughness: 0.1 });
+      const rail2F = new THREE.Mesh(new THREE.BoxGeometry(44, 1.2, 0.08), glassMat);
+      rail2F.position.set(0, FLOOR_2_Y + 0.6, -2.05);
+      scene.add(rail2F);
+
+      scene.add(createStaircase(-3.0, 0, -2.4, FLOOR_2_Y, 24));
+
+      const mez3F = new THREE.Mesh(
+        new THREE.BoxGeometry(44, 0.4, 12),
+        new THREE.MeshStandardMaterial({ color: 0x27272a, roughness: 0.35 })
+      );
+      mez3F.position.set(0, FLOOR_3_Y, -8);
+      mez3F.receiveShadow = true;
+      scene.add(mez3F);
+
+      const rail3F = new THREE.Mesh(new THREE.BoxGeometry(44, 1.2, 0.08), glassMat);
+      rail3F.position.set(0, FLOOR_3_Y + 0.6, -2.05);
+      scene.add(rail3F);
+
+      scene.add(createStaircase(-3.0, FLOOR_2_Y, -2.4, FLOOR_3_Y - FLOOR_2_Y, 22));
+
+      const saGlass = new THREE.Mesh(new THREE.BoxGeometry(14, 4.4, 0.1), glassMat);
+      saGlass.position.set(-13, 2.2, 5.0);
       scene.add(saGlass);
+
+      createBalconyGreenery(scene);
     }
 
-    function buildHoistAndCarBay() {
-      const bay = new THREE.Group();
-      bay.position.set(6.0, 0, 3.0);
+    function createStaircase(x, startY, startZ, height, steps) {
+      const group = new THREE.Group();
+      group.position.set(x, startY, startZ);
+      const stepMat = new THREE.MeshStandardMaterial({ color: 0x090d16, metalness: 0.8 });
+      for (let s = 0; s < steps; s++) {
+        const step = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.08, 0.32), stepMat);
+        step.position.set(0, s * (height / steps), -s * 0.28);
+        group.add(step);
+      }
+      return group;
+    }
 
-      const steelMat = new THREE.MeshStandardMaterial({ color: 0x1e3a8a, metalness: 0.7 });
+    function createBalconyGreenery(targetScene) {
+      const potMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 });
+      const leafMat = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.6 });
+
+      [
+        [-16, FLOOR_2_Y + 0.4, -2.0], [-7, FLOOR_2_Y + 0.4, -2.0], [7, FLOOR_2_Y + 0.4, -2.0], [16, FLOOR_2_Y + 0.4, -2.0],
+        [-12, FLOOR_3_Y + 0.4, -2.0], [0, FLOOR_3_Y + 0.4, -2.0], [12, FLOOR_3_Y + 0.4, -2.0]
+      ].forEach(([px, py, pz]) => {
+        const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.18, 0.4, 12), potMat);
+        pot.position.set(px, py, pz);
+        targetScene.add(pot);
+
+        const plant = new THREE.Mesh(new THREE.DodecahedronGeometry(0.35, 1), leafMat);
+        plant.position.set(px, py + 0.32, pz);
+        targetScene.add(plant);
+      });
+    }
+
+    function buildHoistAndExoticCarBay() {
+      const bay = new THREE.Group();
+      bay.position.set(6.0, 0, 3.5);
+
+      const hazardLine = new THREE.Mesh(
+        new THREE.RingGeometry(5.0, 5.3, 4),
+        new THREE.MeshBasicMaterial({ color: 0xfacc15, side: THREE.DoubleSide })
+      );
+      hazardLine.rotation.x = -Math.PI / 2;
+      hazardLine.position.y = 0.01;
+      bay.add(hazardLine);
+
+      const steelMat = new THREE.MeshStandardMaterial({ color: 0x1e3a8a, metalness: 0.8, roughness: 0.3 });
       [-2.6, 2.6].forEach(x => {
-        const col = new THREE.Mesh(new THREE.BoxGeometry(0.4, 5.4, 0.6), steelMat);
-        col.position.set(x, 2.7, 0);
+        const col = new THREE.Mesh(new THREE.BoxGeometry(0.42, 5.5, 0.62), steelMat);
+        col.position.set(x, 2.75, 0);
+        col.castShadow = true;
         bay.add(col);
       });
-      const topBar = new THREE.Mesh(new THREE.BoxGeometry(5.4, 0.2, 0.3), steelMat);
-      topBar.position.set(0, 5.3, 0);
+      const topBar = new THREE.Mesh(new THREE.BoxGeometry(5.4, 0.22, 0.32), steelMat);
+      topBar.position.set(0, 5.4, 0);
       bay.add(topBar);
 
-      const car = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.55, 4.5), new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.8 }));
-      car.position.set(0, 1.85, 0);
-      bay.add(car);
+      const carGroup = new THREE.Group();
+      carGroup.position.set(0, 1.85, 0);
 
-      const toolBox = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.1, 0.7), new THREE.MeshStandardMaterial({ color: 0xdc2626 }));
-      toolBox.position.set(-3.8, 0.55, 1.8);
-      bay.add(toolBox);
+      const carBody = new THREE.Mesh(
+        new THREE.BoxGeometry(2.35, 0.52, 4.6),
+        new THREE.MeshStandardMaterial({ color: 0x475569, metalness: 0.9, roughness: 0.15 })
+      );
+      carBody.castShadow = true;
+      carGroup.add(carBody);
+
+      const carRoof = new THREE.Mesh(
+        new THREE.BoxGeometry(1.85, 0.48, 2.4),
+        new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.1 })
+      );
+      carRoof.position.set(0, 0.48, -0.2);
+      carGroup.add(carRoof);
+
+      const underglow = new THREE.PointLight(0x38bdf8, 1.5, 6);
+      underglow.position.set(0, -0.25, 0);
+      carGroup.add(underglow);
+
+      [[-1.18, -0.1, 1.4], [1.18, -0.1, 1.4], [-1.18, -0.1, -1.4], [1.18, -0.1, -1.4]].forEach(([bx, by, bz]) => {
+        const disc = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.08, 16), new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9 }));
+        disc.rotation.z = Math.PI / 2;
+        disc.position.set(bx, by, bz);
+        carGroup.add(disc);
+
+        const caliper = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.22, 0.14), new THREE.MeshStandardMaterial({ color: 0xdc2626 }));
+        caliper.position.set(bx + (bx > 0 ? 0.04 : -0.04), by + 0.15, bz);
+        carGroup.add(caliper);
+      });
+      bay.add(carGroup);
+
+      const rollCab = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.15, 0.75), new THREE.MeshStandardMaterial({ color: 0xdc2626, metalness: 0.6 }));
+      rollCab.position.set(-3.8, 0.58, 1.8);
+      bay.add(rollCab);
+
+      const tireMat = new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.9 });
+      for (let t = 0; t < 4; t++) {
+        const tire = new THREE.Mesh(new THREE.TorusGeometry(0.38, 0.14, 12, 24), tireMat);
+        tire.rotation.x = Math.PI / 2;
+        tire.position.set(3.8, 0.15 + t * 0.28, 2.0);
+        bay.add(tire);
+      }
 
       scene.add(bay);
     }
 
-    function buildPartsStoreRoom() {
+    function buildPartsWarehouseLogistics() {
       const store = new THREE.Group();
       store.position.set(13.5, 0, -5.5);
+
       const wall = new THREE.Mesh(new THREE.BoxGeometry(0.3, 5.5, 9.5), new THREE.MeshStandardMaterial({ color: 0x1e293b }));
       wall.position.set(-3.2, 2.75, 0);
       store.add(wall);
 
-      const rackMat = new THREE.MeshStandardMaterial({ color: 0x0284c7 });
+      const rackMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, metalness: 0.7 });
+      const beamMat = new THREE.MeshStandardMaterial({ color: 0xf97316 });
+      const boxColors = [0xffffff, 0x1d4ed8, 0xdc2626, 0xeab308];
+
       for (let rz = -2.8; rz <= 2.8; rz += 2.8) {
-        const rack = new THREE.Mesh(new THREE.BoxGeometry(3.2, 4.5, 1.2), rackMat);
-        rack.position.set(1.5, 2.25, rz);
+        const rack = new THREE.Group();
+        rack.position.set(1.5, 0, rz);
+
+        [1.1, 2.4, 3.8].forEach(y => {
+          const beam = new THREE.Mesh(new THREE.BoxGeometry(3.3, 0.08, 1.3), beamMat);
+          beam.position.y = y;
+          rack.add(beam);
+
+          for (let bx = -1.2; bx <= 1.2; bx += 0.6) {
+            const box = new THREE.Mesh(
+              new THREE.BoxGeometry(0.48, 0.38, 0.48),
+              new THREE.MeshStandardMaterial({ color: boxColors[Math.floor(Math.random() * boxColors.length)] })
+            );
+            box.position.set(bx, y + 0.22, (Math.random() - 0.5) * 0.3);
+            rack.add(box);
+          }
+        });
         store.add(rack);
       }
+
+      [[-1.8, 0.5, 3.6], [-0.9, 0.5, 3.6]].forEach(([dx, dy, dz]) => {
+        const drum = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 1.0, 16), new THREE.MeshStandardMaterial({ color: 0x059669, metalness: 0.6 }));
+        drum.position.set(dx, dy, dz);
+        store.add(drum);
+      });
+
       scene.add(store);
+    }
+
+    function build3FPenthouseEntertainment() {
+      const p3 = new THREE.Group();
+      p3.position.set(0, FLOOR_3_Y, 0);
+
+      const poolTable = new THREE.Group();
+      poolTable.position.set(13.5, 0, -7.5);
+
+      const tableBody = new THREE.Mesh(new THREE.BoxGeometry(3.4, 0.35, 1.9), new THREE.MeshStandardMaterial({ color: 0x451a03, roughness: 0.5 }));
+      tableBody.position.y = 0.65;
+      poolTable.add(tableBody);
+
+      const felt = new THREE.Mesh(new THREE.BoxGeometry(3.0, 0.04, 1.5), new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.9 }));
+      felt.position.y = 0.84;
+      poolTable.add(felt);
+
+      const brassLamp = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.15, 0.4), new THREE.MeshStandardMaterial({ color: 0xca8a04, metalness: 0.9 }));
+      brassLamp.position.set(0, 2.2, 0);
+      poolTable.add(brassLamp);
+
+      p3.add(poolTable);
+
+      const arcade = new THREE.Mesh(new THREE.BoxGeometry(0.85, 2.0, 0.85), new THREE.MeshStandardMaterial({ color: 0x0284c7 }));
+      arcade.position.set(9.2, 1.0, -9.5);
+      p3.add(arcade);
+
+      const sofa = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.4, 1.2), new THREE.MeshStandardMaterial({ color: 0x334155 }));
+      sofa.position.set(13.5, 0.3, -3.8);
+      p3.add(sofa);
+
+      const gameTV = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.3, 0.06), new THREE.MeshBasicMaterial({ color: 0x0284c7 }));
+      gameTV.position.set(13.5, 1.5, -5.5);
+      p3.add(gameTV);
+
+      const confTable = new THREE.Mesh(new THREE.BoxGeometry(4.8, 0.1, 1.8), new THREE.MeshStandardMaterial({ color: 0x27272a, roughness: 0.3 }));
+      confTable.position.set(4.0, 0.75, -7.5);
+      p3.add(confTable);
+
+      const tv85 = new THREE.Mesh(new THREE.BoxGeometry(3.6, 2.1, 0.08), new THREE.MeshBasicMaterial({ color: 0x0f172a }));
+      tv85.position.set(4.0, 2.2, -12.5);
+      p3.add(tv85);
+
+      scene.add(p3);
     }
 
     function buildAllDepartmentSigns() {
@@ -531,13 +775,13 @@
       cv.width = 512; cv.height = 160;
       const c = cv.getContext('2d');
 
-      c.fillStyle = 'rgba(10, 15, 29, 0.94)';
+      c.fillStyle = 'rgba(8, 14, 28, 0.95)';
       c.beginPath();
       c.moveTo(20, 10);
-      c.arcTo(492, 10, 492, 150, 16);
-      c.arcTo(492, 150, 20, 150, 16);
-      c.arcTo(20, 150, 20, 10, 16);
-      c.arcTo(20, 10, 492, 10, 16);
+      c.arcTo(492, 10, 492, 150, 18);
+      c.arcTo(492, 150, 20, 150, 18);
+      c.arcTo(20, 150, 20, 10, 18);
+      c.arcTo(20, 10, 492, 10, 18);
       c.closePath();
       c.fill();
 
@@ -639,6 +883,77 @@
       return humanoid;
     }
 
+    function startAutonomousConsciousnessLoop() {
+      renderConsciousnessRoster();
+
+      setInterval(() => {
+        const ag = AGENTS[Math.floor(Math.random() * AGENTS.length)];
+        ag.mental.energy = Math.max(40, Math.min(100, ag.mental.energy + (Math.random() > 0.5 ? -4 : 6)));
+        ag.mental.boredom = Math.max(5, Math.min(95, ag.mental.boredom + (Math.random() > 0.5 ? 5 : -4)));
+
+        const thoughts = [
+          `正在核对最新配件加价率与工时贡献矩阵...`,
+          `车间举升机检修效率达标，下摆臂胶套状态良好。`,
+          `去 3F 空中沙龙喝杯意式浓缩咖啡，放松一下再战！`,
+          `发现老车主进气道积碳严重，正构想免拆除碳套餐...`,
+          `全厂 11 部门网络与 WebGL 3D 物理管线运行畅通。`
+        ];
+        ag.mental.thought = thoughts[Math.floor(Math.random() * thoughts.length)];
+
+        if (Math.random() > 0.6) {
+          const partner = AGENTS[Math.floor(Math.random() * AGENTS.length)];
+          if (partner.id !== ag.id) {
+            chatHistories['audit'].push({
+              sender: 'system',
+              name: 'AI自发对话',
+              time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              text: `【${ag.name.split(' ')[0]} ➔ ${partner.name.split(' ')[0]}】: "${ag.mental.thought}"`
+            });
+            if (currentChannel === 'audit') renderMessages();
+          }
+        }
+
+        renderConsciousnessRoster();
+      }, 7000);
+    }
+
+    function renderConsciousnessRoster() {
+      const container = document.getElementById('agent-consciousness-roster');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const eDiv = document.createElement('div');
+      eDiv.className = 'glass-card p-2 rounded-xl border border-amber-500/30';
+      eDiv.innerHTML = `
+        <div class="flex items-center justify-between pb-1">
+          <span class="font-bold text-amber-300 text-[11px]">${ASSISTANT.name.split(' ')[0]} (幕僚长)</span>
+          <span class="text-[9px] text-emerald-400 font-mono">精力 ${ASSISTANT.mental.energy}%</span>
+        </div>
+        <p class="text-[10px] text-slate-300 truncate italic">"${ASSISTANT.mental.thought}"</p>
+      `;
+      container.appendChild(eDiv);
+
+      AGENTS.forEach(ag => {
+        const item = document.createElement('div');
+        item.onclick = () => { switchChannel(ag.id); zoomToTarget(ag.id); toggleSidebarDrawer(false); };
+        item.className = 'p-2 rounded-xl bg-slate-900/60 border border-slate-700/60 hover:border-cyan-500 transition cursor-pointer';
+        item.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-medium text-slate-200 text-[11px] flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full" style="background:${ag.color}"></span>
+              ${ag.name.split(' ')[0]}
+            </span>
+            <div class="flex items-center gap-1 text-[9px] text-slate-400 font-mono">
+              <span>⚡${ag.mental.energy}%</span>
+              <span>☕${ag.mental.boredom}%</span>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-400 truncate mt-0.5 italic">"${ag.mental.thought}"</p>
+        `;
+        container.appendChild(item);
+      });
+    }
+
     function onWindowResize() {
       if (!camera || !renderer) return;
       camera.fov = window.innerWidth < 768 ? 58 : 45;
@@ -649,10 +964,19 @@
 
     function zoomToTarget(targetId) {
       if (targetId === 'overview') {
-        camTargetPos = new THREE.Vector3(0, 22, 36);
-        lookTargetPos = new THREE.Vector3(0, 3.5, 0);
+        camTargetPos = new THREE.Vector3(0, 26, 42);
+        lookTargetPos = new THREE.Vector3(0, 5, 0);
+      } else if (targetId === 'floor1') {
+        camTargetPos = new THREE.Vector3(0, 10, 24);
+        lookTargetPos = new THREE.Vector3(0, 2, 2);
+      } else if (targetId === 'floor2') {
+        camTargetPos = new THREE.Vector3(0, FLOOR_2_Y + 7, 16);
+        lookTargetPos = new THREE.Vector3(0, FLOOR_2_Y + 1.5, -6);
+      } else if (targetId === 'floor3') {
+        camTargetPos = new THREE.Vector3(0, FLOOR_3_Y + 7, 16);
+        lookTargetPos = new THREE.Vector3(0, FLOOR_3_Y + 1.5, -6);
       } else if (targetId === 'assistant') {
-        camTargetPos = new THREE.Vector3(ASSISTANT.pos.x, FLOOR_2_Y + 1.8, ASSISTANT.pos.z + 3.0);
+        camTargetPos = new THREE.Vector3(ASSISTANT.pos.x, FLOOR_2_Y + 2.0, ASSISTANT.pos.z + 3.2);
         lookTargetPos = new THREE.Vector3(ASSISTANT.pos.x, FLOOR_2_Y + 1.0, ASSISTANT.pos.z);
       } else {
         const dept = DEPARTMENTS.find(d => d.id === targetId || d.code.toLowerCase().replace(' ', '') === targetId);
@@ -673,7 +997,7 @@
       isMeetingMode = !isMeetingMode;
       const btn = document.getElementById('meeting-toggle-btn');
       if (isMeetingMode) {
-        btn.innerHTML = `<i class="fa-solid fa-person-walking-arrow-loop-left"></i> 回位`;
+        btn.innerHTML = `<i class="fa-solid fa-person-walking-arrow-loop-left"></i> 结束会议回位`;
         AGENTS.forEach(ag => {
           const m = agentMeshGroups[ag.id];
           if (m) { m.position.set(ag.meetingPos.x, ag.meetingPos.y, ag.meetingPos.z); m.rotation.y = ag.meetingRotY; }
@@ -691,6 +1015,16 @@
 
     function animate() {
       requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      const time = clock.getElapsedTime();
+
+      Object.keys(agentMeshGroups).forEach((k, idx) => {
+        const grp = agentMeshGroups[k];
+        if (grp) {
+          grp.position.y += Math.sin(time * 2 + idx) * 0.0008;
+        }
+      });
+
       if (camTargetPos && lookTargetPos) {
         camera.position.lerp(camTargetPos, 0.06);
         controls.target.lerp(lookTargetPos, 0.06);
@@ -702,31 +1036,18 @@
       renderer.render(scene, camera);
     }
 
-    /* =====================================================================
-       4. UI DRAWERS & CONTROLLERS
-       ===================================================================== */
     function toggleSidebarDrawer(show) {
       const d = document.getElementById('sidebar-drawer');
       const b = document.getElementById('drawer-backdrop');
-      if (show) {
-        d.classList.remove('-translate-x-full');
-        b.classList.remove('hidden');
-      } else {
-        d.classList.add('-translate-x-full');
-        b.classList.add('hidden');
-      }
+      if (show) { d.classList.remove('-translate-x-full'); b.classList.remove('hidden'); }
+      else { d.classList.add('-translate-x-full'); b.classList.add('hidden'); }
     }
 
     function toggleChatDrawer(show) {
       const d = document.getElementById('chat-drawer');
       const b = document.getElementById('drawer-backdrop');
-      if (show) {
-        d.classList.remove('translate-x-full');
-        b.classList.remove('hidden');
-      } else {
-        d.classList.add('translate-x-full');
-        b.classList.add('hidden');
-      }
+      if (show) { d.classList.remove('translate-x-full'); b.classList.remove('hidden'); }
+      else { d.classList.add('translate-x-full'); b.classList.add('hidden'); }
     }
 
     function closeAllDrawers() {
@@ -745,7 +1066,7 @@
           <div>
             <div class="flex items-center gap-1.5 font-bold text-white group-hover:text-cyan-300">
               <span class="px-1.5 py-0.2 rounded text-[10px] font-mono" style="background:${dept.color}25; color:${dept.color}">${dept.code}</span>
-              <span>${dept.name}</span>
+              <span class="truncate">${dept.name}</span>
             </div>
             <div class="text-[10px] text-slate-400 mt-0.5">${dept.floor} · 驻守: ${dept.agent.split(' ')[0]}</div>
           </div>
@@ -781,7 +1102,7 @@
           </div>
           <p class="text-[11px] text-slate-300 py-2">${prop.summary}</p>
           <div class="flex justify-end gap-2 pt-1 border-t border-slate-700/60">
-            <button onclick="alert('已批准方案！专员已开始制作并归档'); closeProposalsModal();" class="px-3 py-1 bg-emerald-600 text-white rounded-lg text-xs">批准执行</button>
+            <button onclick="alert('已批准方案！专员已立即投入施工落地并自动归档。'); closeProposalsModal();" class="px-3 py-1 bg-emerald-600 text-white rounded-lg text-xs">批准执行</button>
           </div>
         `;
         container.appendChild(card);
@@ -818,26 +1139,6 @@
       });
     }
 
-    function renderRoster() {
-      const container = document.getElementById('dm-list-container');
-      container.innerHTML = '';
-      AGENTS.forEach(ag => {
-        const btn = document.createElement('button');
-        btn.onclick = () => { switchChannel(ag.id); zoomToTarget(ag.id); toggleSidebarDrawer(false); };
-        btn.className = 'w-full text-left px-2.5 py-2 rounded-xl flex items-center justify-between text-slate-300 hover:bg-slate-800 transition';
-        btn.innerHTML = `
-          <div class="flex items-center gap-2 truncate">
-            <span class="w-2 h-2 rounded-full" style="background:${ag.color}"></span>
-            <div class="truncate">
-              <div class="text-xs font-medium text-slate-200 truncate">${ag.name}</div>
-              <div class="text-[10px] text-slate-400 truncate">${ag.zone.split('·')[0]}</div>
-            </div>
-          </div>
-        `;
-        container.appendChild(btn);
-      });
-    }
-
     function switchChannel(channelId) {
       currentChannel = channelId;
       const title = document.getElementById('active-chat-title');
@@ -847,11 +1148,15 @@
       if (channelId === 'assistant') {
         title.innerText = ASSISTANT.name;
         badge.innerText = '最高幕僚长';
-        desc.innerText = '全权统筹调度 · 过滤琐碎汇报';
+        desc.innerText = '全权统筹排期 · 智能过滤汇报';
       } else if (channelId === 'general') {
         title.innerText = '# 车间全员大群';
         badge.innerText = '全员在线';
         desc.innerText = '下达车间大任务、各专员按职能接单';
+      } else if (channelId === 'audit') {
+        title.innerText = '# AI自主意识与行为流';
+        badge.innerText = '实时心智流';
+        desc.innerText = '实时监控智能体自主思考、闲聊与生理状态';
       } else {
         const ag = AGENTS.find(a => a.id === channelId);
         if (ag) {
@@ -905,16 +1210,14 @@
         sender: currentChannel,
         name: '系统汇报',
         time: '刚刚',
-        text: `【实时进度】工位运行正常，11大部门协同流水线畅通！`
+        text: `【实时进度】3层11大部门协同流水线畅通，心智引擎运转正常！`
       });
       renderMessages();
     }
 
-    /* 启动自愈机制 */
     function bootSystem() {
       init3D();
-      renderRoster();
-      renderMessages();
+      switchChannel('assistant');
     }
 
     if (document.readyState === 'loading') {
